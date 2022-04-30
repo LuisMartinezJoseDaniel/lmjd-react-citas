@@ -1,9 +1,12 @@
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
+import Update from "./Update";
 
-const Paciente = ({ paciente, setPaciente, eliminarPaciente }) => {
+
+const Paciente = ({ paciente, setPaciente, eliminarPaciente, isUpdated }) => {
   const { id, nombre, propietario, email, fecha, sintomas } = paciente;
 
+  
   const handleEliminar = () => {
      Swal.fire({
        title: "Estás seguro de eliminar?",
@@ -13,6 +16,7 @@ const Paciente = ({ paciente, setPaciente, eliminarPaciente }) => {
        confirmButtonColor: "#3085d6",
        cancelButtonColor: "#d33",
        confirmButtonText: "Si, eliminalo!",
+       cancelButtonText: "Cancelar",
      }).then((result) => {
        if (result.isConfirmed) {
          eliminarPaciente(id); //llamar el prop y enviar el id
@@ -22,6 +26,12 @@ const Paciente = ({ paciente, setPaciente, eliminarPaciente }) => {
   };
   return (
     <div className="mx-5 mb-10 bg-white shadow-md rounded-xl px-5 py-10">
+      {isUpdated === paciente.id && (
+        <Update>
+          <p>Datos actualizados correctamente</p>
+        </Update>
+      )}
+
       <p className="font-bold mb-3 text-gray-700 uppercase">
         Nombre: <span className="font-normal normal-case">{nombre}</span>
       </p>

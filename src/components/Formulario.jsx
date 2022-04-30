@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 import Error from "./Error";
 
-const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
+const Formulario = ({
+  pacientes,
+  setPacientes,
+  paciente,
+  setPaciente,
+  setIsUpdated,
+}) => {
   const [nombre, setNombre] = useState("");
   const [propietario, setPropietario] = useState("");
   const [email, setEmail] = useState("");
@@ -32,6 +40,9 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
     //Validacion del formulario
     if ([nombre, propietario, email, fecha, sintomas].includes("")) {
       setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
       return;
     }
     //Objeto de paciente
@@ -51,6 +62,12 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
         pacienteState.id === objetoPaciente.id ? objetoPaciente : pacienteState
       );
       setPacientes(pacientesActualizados);
+      
+      setIsUpdated(paciente.id);
+      setTimeout(() => {
+        setIsUpdated(0);
+      }, 3000);
+
       setPaciente({});
     } else {
       //Nuevo registro
@@ -59,6 +76,8 @@ const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
       setPacientes([...pacientes, objetoPaciente]);
       //Segunda forma de modificar el array, si no se tiene una prop pacientes
       // setPacientes((pacientes) => [...pacientes, objetoPaciente]);
+
+      Swal.fire("Paciente agregado correctamente!", "", "success");
     }
 
     setError(false);

@@ -7,7 +7,8 @@ function App() {
   const pacientesLS = JSON.parse(localStorage.getItem("pacientes")) ?? [];
   const [pacientes, setPacientes] = useState(pacientesLS);
   const [paciente, setPaciente] = useState({});
-  
+  const [isUpdated, setIsUpdated] = useState(0);
+
   useEffect(() => {
     //Para utilizar localStorage es necesario convertir a string
     localStorage.setItem('pacientes', JSON.stringify(pacientes))
@@ -33,11 +34,13 @@ function App() {
           setPacientes={setPacientes}
           paciente={paciente}
           setPaciente={setPaciente}
+          setIsUpdated={setIsUpdated}
         />
         <ListadoPacientes
           pacientes={pacientes}
           setPaciente={setPaciente}
           eliminarPaciente={eliminarPaciente}
+          isUpdated={isUpdated}
         />
       </div>
     </div>
